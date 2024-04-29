@@ -1,35 +1,24 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    main.py                                            :+:      :+:    :+:    #
+#    interfaces.py                                      :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: serge <sgamb2000@gmail.com>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/04/29 19:17:24 by serge             #+#    #+#              #
-#    Updated: 2024/04/29 19:17:25 by serge            ###   ########.fr        #
+#    Created: 2024/04/29 13:05:33 by serge             #+#    #+#              #
+#    Updated: 2024/04/29 19:04:30 by serge            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-from interfaces import UserInterface as ui
+from crud import get_user_by_email_id, get_user_by_id
 from models import User
 
 
-email_id = "sgamb2000@gmail.com"
-user_id = 3
+class UserInterface:
+    @classmethod
+    def get_by_email(cls, email: str):
+        return User(**get_user_by_email_id(email))
 
-
-def test_get_by_email():
-    user = ui.get_by_email(email_id)
-    assert type(user) is User
-    assert user.name == "sgamb2000"
-
-
-def test_get_by_id():
-    user2 = ui.get_by_id(user_id)
-    assert user2.name == "user3"
-    assert "sound@me" in user2.email_id
-
-
-def main():
-    test_get_by_email()
-    test_get_by_id()
+    @classmethod
+    def get_by_id(cls, user_id: int):
+        return User(**get_user_by_id(user_id))

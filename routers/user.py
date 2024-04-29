@@ -1,35 +1,27 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    main.py                                            :+:      :+:    :+:    #
+#    user.py                                            :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: serge <sgamb2000@gmail.com>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/04/29 19:17:24 by serge             #+#    #+#              #
-#    Updated: 2024/04/29 19:17:25 by serge            ###   ########.fr        #
+#    Created: 2024/04/29 14:03:38 by serge             #+#    #+#              #
+#    Updated: 2024/04/29 15:04:16 by serge            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-from interfaces import UserInterface as ui
+from fastapi import APIRouter
 from models import User
+from interfaces import UserInterface
+from loggers import user_logger
 
 
-email_id = "sgamb2000@gmail.com"
-user_id = 3
+router = APIRouter(
+        prefix="/user"
+)
 
 
-def test_get_by_email():
-    user = ui.get_by_email(email_id)
-    assert type(user) is User
-    assert user.name == "sgamb2000"
-
-
-def test_get_by_id():
-    user2 = ui.get_by_id(user_id)
-    assert user2.name == "user3"
-    assert "sound@me" in user2.email_id
-
-
-def main():
-    test_get_by_email()
-    test_get_by_id()
+@router.get("/")
+def get_user(email: str) -> User:
+    user_logger.info("Retry")
+    user = UserInterface.get_by_email(email)
