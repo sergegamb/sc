@@ -1,2 +1,2 @@
-run:
-	uvicorn main:app --reload &
+test:
+	python main.py

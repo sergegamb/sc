@@ -6,7 +6,7 @@
 #    By: serge <sgamb2000@gmail.com>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/29 19:17:24 by serge             #+#    #+#              #
-#    Updated: 2024/04/29 19:17:25 by serge            ###   ########.fr        #
+#    Updated: 2024/05/06 03:17:52 by serge            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,14 +27,14 @@ def test_get_by_email():
 def test_get_by_id():
     user2 = UserInterface.get_by_id(user_id)
     assert user2.name == "user3"
-    assert "sound@me" in user2.email_id
+    assert "sound.me" in user2.email_id
 
 
 def test_post_request():
     request_data = {
         "subject": "post_Request"
     }
-    request = RequestInterface.post_request(request_data)
+    request = RequestInterface.add(request_data)
     assert request.subject == "post_Request"
 
 
@@ -42,3 +42,7 @@ def main():
     test_get_by_email()
     test_get_by_id()
     test_post_request()
+
+
+if __name__ == "__main__":
+    main()
