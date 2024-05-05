@@ -31,3 +31,8 @@ def get_user_by_email_id(email_id: str):
             "email_id": email_id,
     }
     return user
+
+
+def create_new_request(request_data: dict):
+    request = request_data
+    return request

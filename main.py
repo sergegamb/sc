@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-from interfaces import UserInterface as ui
+from interfaces import UserInterface, RequestInterface
 from models import User
 
 
@@ -19,17 +19,26 @@ user_id = 3
 
 
 def test_get_by_email():
-    user = ui.get_by_email(email_id)
+    user = UserInterface.get_by_email(email_id)
     assert type(user) is User
     assert user.name == "sgamb2000"
 
 
 def test_get_by_id():
-    user2 = ui.get_by_id(user_id)
+    user2 = UserInterface.get_by_id(user_id)
     assert user2.name == "user3"
     assert "sound@me" in user2.email_id
+
+
+def test_post_request():
+    request_data = {
+        "subject": "post_Request"
+    }
+    request = RequestInterface.post_request(request_data)
+    assert request.subject == "post_Request"
 
 
 def main():
     test_get_by_email()
     test_get_by_id()
+    test_post_request()

@@ -10,8 +10,8 @@
 #                                                                              #
 # **************************************************************************** #
 
-from crud import get_user_by_email_id, get_user_by_id
-from models import User
+from crud import get_user_by_email_id, get_user_by_id, create_new_request
+from models import User, Request
 
 
 class UserInterface:
@@ -22,3 +22,9 @@ class UserInterface:
     @classmethod
     def get_by_id(cls, user_id: int):
         return User(**get_user_by_id(user_id))
+
+
+class RequestInterface:
+    @classmethod
+    def post_request(cls, data: dict):
+        return Request(**create_new_request(data))
