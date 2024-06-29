@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-from interfaces import UserInterface, RequestInterface
+from interfaces import UserInterface, RequestInterface, TaskInterface
 from models import User
 
 
@@ -38,10 +38,17 @@ def test_post_request():
     assert request.subject == "post_Request"
 
 
+def test_list_task():
+    tasks = TaskInterface.list()
+    assert len(tasks) == 12
+    assert tasks.pop().id == "38"
+
+
 def main():
     test_get_by_email()
     test_get_by_id()
     test_post_request()
+    test_list_task()
 
 
 if __name__ == "__main__":
