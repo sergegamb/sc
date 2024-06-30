@@ -6,7 +6,7 @@
 #    By: serge <sgamb2000@gmail.com>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/29 13:05:33 by serge             #+#    #+#              #
-#    Updated: 2024/06/30 07:44:57 by serge            ###   ########.fr        #
+#    Updated: 2024/06/30 07:52:35 by serge            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,6 +80,7 @@ class TaskInterface:
             ]
         },
         "fields_required": [
+            "title",
             "id",
             "status",
             "additional_cost",

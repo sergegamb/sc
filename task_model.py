@@ -81,6 +81,13 @@ class Task(BaseModel):
     id: str
     account: Account
     status: Status
+    title: str
+
+    def representation(self):
+        return {
+            "id": self.id,
+            "title": self.title
+        }
 
 
 class Model(BaseModel):
