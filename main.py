@@ -6,12 +6,12 @@
 #    By: serge <sgamb2000@gmail.com>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/29 19:17:24 by serge             #+#    #+#              #
-#    Updated: 2024/05/06 03:17:52 by serge            ###   ########.fr        #
+#    Updated: 2024/06/30 07:44:48 by serge            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-from interfaces import UserInterface, RequestInterface, TaskInterface
-from models import User
+from .interfaces import UserInterface, RequestInterface, TaskInterface
+from .models import User
 
 
 email_id = "sgamb2000@gmail.com"

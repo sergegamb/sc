@@ -6,15 +6,15 @@
 #    By: serge <sgamb2000@gmail.com>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/29 13:05:33 by serge             #+#    #+#              #
-#    Updated: 2024/05/06 03:21:12 by serge            ###   ########.fr        #
+#    Updated: 2024/06/30 07:44:57 by serge            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-from user import UserWebInterface
-from request import RequestWebInterface
-from task import TaskWebInterface
-from models import User, Request
-from task_model import Model as TaskListResponse
+from .user import UserWebInterface
+from .request import RequestWebInterface
+from .task import TaskWebInterface
+from .models import User, Request
+from .task_model import Model as TaskListResponse
 
 
 class UserInterface:
