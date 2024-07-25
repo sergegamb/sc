@@ -1,20 +1,9 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    interfaces.py                                      :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: serge <sgamb2000@gmail.com>                +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/04/29 13:05:33 by serge             #+#    #+#              #
-#    Updated: 2024/06/30 07:52:35 by serge            ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 from .user import UserWebInterface
 from .request import RequestWebInterface
-from .task import TaskWebInterface
+from .task_web_interface import TaskWebInterface
 from .models import User, Request
-from .task_model import Model as TaskListResponse
+from .task_model import TaskListResponse, TaskGetResponse
+from .task_model_model import Model as TaskResponse
 
 
 class UserInterface:
@@ -35,59 +24,32 @@ class RequestInterface:
 
 class TaskInterface:
     @classmethod
-    def list(cls, input_data: dict = None):
-        input_data = """
-        {
-    "list_info": {
-        "row_count": "12",
-        "start_index": "2",
-        "sort_fields": [
-            {
-                "field": "title",
-                "order": "asc"
-            },
-            {
-                "field": "created_time",
-                "order": "desc"
-            }
-        ],
-        "filter_by": {
-            "id": "7"
-        },
-        "search_criteria": {
-            "field": "account.name",
-            "condition": "is not",
-            "values": [
-                "TESTACCOUNT1"
-            ],
-            "children": [
-                {
-                    "field": "additional_cost",
-                    "condition": "lte",
-                    "values": [
-                        100
-                    ],
-                    "logical_operator": "AND"
-                },
-                {
-                    "field": "marked_owner.name",
-                    "condition": "like",
-                    "values": [
-                        "Howard Stern"
-                    ],
-                    "logical_operator": "OR"
+    def add(cls, title: str):
+        input_data = {
+            "task": {
+                "title": title,
+                "status": {
+                    "id": "2",
+                    "name": "Open"
                 }
-            ]
-        },
-        "fields_required": [
-            "title",
-            "id",
-            "status",
-            "additional_cost",
-            "created_time",
-            "account"
-        ]
-    }
-}"""
+            }
+        }
+        task_add_response = TaskResponse(**TaskWebInterface.add(input_data))
+        return task_add_response.task
+
+    @classmethod
+    def list(cls, input_data: dict = None):
+        input_data = {
+            "list_info": {
+                "row_count": 10,
+                "sort_order": "desc",
+                "sort_field": "id",
+            }
+        }
         task_list_response = TaskListResponse(**TaskWebInterface.list(input_data))
         return task_list_response.tasks
+
+    @classmethod
+    def get(cls, task_id):
+        get_task_response = TaskGetResponse(**TaskWebInterface.get(task_id))
+        return get_task_response.task

@@ -34,14 +34,14 @@ class SearchCriteria(BaseModel):
 
 
 class ListInfo(BaseModel):
-    sort_fields: List[SortField]
+    sort_fields: Optional[List[SortField]] = None
     has_more_rows: bool
     start_index: int
-    fields_required: List[str]
-    filter_by: FilterBy
+    fields_required: Optional[List[str]] = None
+    filter_by: Optional[FilterBy] = None
     page: int
     start_count: int
-    search_criteria: SearchCriteria
+    search_criteria: Optional[SearchCriteria] = None
     row_count: int
 
 
@@ -76,10 +76,10 @@ class Status(BaseModel):
 
 class Task(BaseModel):
     created_time: CreatedTime
-    baseURL: str
+    baseURL: Optional[str] = None
     additional_cost: str
     id: str
-    account: Account
+    account: Optional[Account] = None
     status: Status
     title: str
 
@@ -90,7 +90,12 @@ class Task(BaseModel):
         }
 
 
-class Model(BaseModel):
+class TaskListResponse(BaseModel):
     response_status: List[ResponseStatu]
     list_info: ListInfo
     tasks: List[Task]
+
+
+class TaskGetResponse(BaseModel):
+    response_status: ResponseStatu
+    task: Task
