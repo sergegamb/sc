@@ -53,3 +53,7 @@ class TaskInterface:
     def get(cls, task_id):
         get_task_response = TaskGetResponse(**TaskWebInterface.get(task_id))
         return get_task_response.task
+
+    @classmethod
+    def delete(cls, task_id):
+        TaskWebInterface.delete(task_id)
