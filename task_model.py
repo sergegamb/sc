@@ -74,7 +74,13 @@ class Status(BaseModel):
     id: str
 
 
+class Request(BaseModel):
+    subject: str
+    id: str
+
+
 class Task(BaseModel):
+    request: Optional[Request] = None
     created_time: CreatedTime
     baseURL: Optional[str] = None
     additional_cost: str

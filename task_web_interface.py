@@ -5,7 +5,7 @@ import requests
 
 
 class TaskWebInterface:
-    url = "https://support.agneko.com/api/v3/tasks"
+    url = os.getenv("URL") + "/tasks"
     headers = {"authtoken": os.getenv("TOKEN"),
                "accept": "application/vnd.manageengine.sdp.v3+json"}
 

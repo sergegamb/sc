@@ -1,6 +1,7 @@
 from .user import UserWebInterface
-from .request import RequestWebInterface
+from .request_web_interface import RequestWebInterface
 from .task_web_interface import TaskWebInterface
+from .request_task_web_interface import RequestTaskWebInterface
 from .models import User, Request
 from .task_model import TaskListResponse, TaskGetResponse
 from .task_model_model import Model as TaskResponse
@@ -52,6 +53,11 @@ class TaskInterface:
     @classmethod
     def get(cls, task_id):
         get_task_response = TaskGetResponse(**TaskWebInterface.get(task_id))
+        return get_task_response.task
+
+    @classmethod
+    def get_request_task(cls, task_id, request_id):
+        get_task_response = TaskGetResponse(**RequestTaskWebInterface.get(task_id, request_id))
         return get_task_response.task
 
     @classmethod
