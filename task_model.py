@@ -40,7 +40,7 @@ class ListInfo(BaseModel):
     fields_required: Optional[List[str]] = None
     filter_by: Optional[FilterBy] = None
     page: int
-    start_count: int
+    start_count: Optional[int] = None
     search_criteria: Optional[SearchCriteria] = None
     row_count: int
 
