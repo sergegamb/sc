@@ -65,7 +65,7 @@ class CreatedBy(BaseModel):
 
 
 class Status(BaseModel):
-    color: str
+    color: str | None
     name: str
     id: str
 

@@ -26,12 +26,14 @@ class RequestInterface:
 
     @classmethod
     def get(cls, request_id):
-        view_requst_response = ViewRequestResponse(**RequestWebInterface.view_requst(request_id))
+        api_response = RequestWebInterface.view_requst(request_id)
+        view_requst_response = ViewRequestResponse(**api_response)
         return view_requst_response.request
 
     @classmethod
-    def list(cls, list_info = None):
-        request_list_response = RequestListResponse(**RequestWebInterface.view_all_requests(list_info))
+    def list(cls, list_info=None):
+        api_response = RequestWebInterface.view_all_requests(list_info)
+        request_list_response = RequestListResponse(**api_response)
         return request_list_response.requests
 
 
@@ -70,17 +72,21 @@ class TaskInterface:
                 }
             }
         }
-        task_add_response = TaskResponse(**RequestTaskWebInterface.add_a_task(request_id, task))
-        return task_add_response.task
+        api_response = RequestTaskWebInterface.add_a_task(request_id, task)
+        task_response = TaskResponse(**api_response)
+        return task_response.task
 
     @classmethod
     def list(cls):
-        task_list_response = TaskListResponse(**TaskWebInterface.list(cls.list_info))
+        api_response = TaskWebInterface.list(cls.list_info)
+        task_list_response = TaskListResponse(**api_response)
         return task_list_response.tasks
 
     @classmethod
     def list_request_tasks(cls, request_id):
-        task_list_response = TaskListResponse(**RequestTaskWebInterface.view_all_tasks(request_id, cls.list_info))
+        api_response = RequestTaskWebInterface.view_all_tasks(request_id,
+                                                              cls.list_info)
+        task_list_response = TaskListResponse(**api_response)
         return task_list_response.tasks
 
     @classmethod
@@ -90,7 +96,8 @@ class TaskInterface:
 
     @classmethod
     def get_request_task(cls, task_id, request_id):
-        get_task_response = TaskGetResponse(**RequestTaskWebInterface.get(task_id, request_id))
+        api_response = RequestTaskWebInterface.get(task_id, request_id)
+        get_task_response = TaskGetResponse(**api_response)
         return get_task_response.task
 
     @classmethod
