@@ -31,3 +31,4 @@ class TaskWebInterface:
     def delete(cls, task_id):
         url = cls.url + "/" + task_id
         response = requests.delete(url, headers=cls.headers, verify=False)
+        return response.json()

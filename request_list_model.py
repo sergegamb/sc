@@ -67,7 +67,7 @@ class CreatedBy(BaseModel):
 class Status(BaseModel):
     color: str | None
     name: str
-    id: str
+    id: int
 
 
 class Request(BaseModel):

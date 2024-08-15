@@ -61,8 +61,37 @@ class TaskInterface:
         return task_add_response.task
 
     @classmethod
-    def add_request_task(cls, request_id, title):
-        # TODO: reduce duplication
+    def list(cls):
+        api_response = TaskWebInterface.list(cls.list_info)
+        task_list_response = TaskListResponse(**api_response)
+        return task_list_response.tasks
+
+    @classmethod
+    def get(cls, task_id):
+        get_task_response = TaskGetResponse(**TaskWebInterface.get(task_id))
+        return get_task_response.task
+
+    @classmethod
+    def delete(cls, task_id):
+        api_response = TaskWebInterface.delete(task_id)
+
+
+class RequestTaskInterface:
+    list_info = {
+        "list_info": {
+            "row_count": 10,
+            "sort_order": "desc",
+            "sort_field": "id",
+            "search_criteria": {
+                "field": "status.id",
+                "condition": "is",
+                "values": [3, 2],
+            }
+        }
+    }
+
+    @classmethod
+    def add(cls, request_id, title):
         task = {
             "task": {
                 "title": title,
@@ -77,29 +106,21 @@ class TaskInterface:
         return task_response.task
 
     @classmethod
-    def list(cls):
-        api_response = TaskWebInterface.list(cls.list_info)
-        task_list_response = TaskListResponse(**api_response)
-        return task_list_response.tasks
+    def get(cls, request_id, task_id):
+        api_response = RequestTaskWebInterface.get(task_id, request_id)
+        get_task_response = TaskGetResponse(**api_response)
+        return get_task_response.task
 
     @classmethod
-    def list_request_tasks(cls, request_id):
+    def list(cls, request_id):
         api_response = RequestTaskWebInterface.view_all_tasks(request_id,
                                                               cls.list_info)
         task_list_response = TaskListResponse(**api_response)
         return task_list_response.tasks
 
     @classmethod
-    def get(cls, task_id):
-        get_task_response = TaskGetResponse(**TaskWebInterface.get(task_id))
-        return get_task_response.task
-
-    @classmethod
-    def get_request_task(cls, task_id, request_id):
-        api_response = RequestTaskWebInterface.get(task_id, request_id)
-        get_task_response = TaskGetResponse(**api_response)
-        return get_task_response.task
-
-    @classmethod
-    def delete(cls, task_id):
-        TaskWebInterface.delete(task_id)
+    def delete(cls, request_id, task_id):
+        api_response = RequestTaskWebInterface.delete_a_task(
+            request_id,
+            task_id
+        )

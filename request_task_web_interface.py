@@ -28,3 +28,9 @@ class RequestTaskWebInterface:
         params = {"input_data": json.dumps(list_info)}
         response = requests.get(url, headers=cls.headers, params=params, verify=False)
         return response.json()
+
+    @classmethod
+    def delete_a_task(cls, request_id, task_id):
+        url = cls.url + f"/{request_id}/tasks/{task_id}"
+        response = requests.delete(url, headers=cls.headers, verify=False)
+        return response.json()

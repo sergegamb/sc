@@ -29,7 +29,7 @@ class Child(BaseModel):
 class SearchCriteria(BaseModel):
     condition: str
     field: str
-    children: List[Child]
+    children: Optional[List[Child]] = None
     values: List[str]
 
 
@@ -71,7 +71,7 @@ class Account(BaseModel):
 class Status(BaseModel):
     color: str
     name: str
-    id: str
+    id: int
 
 
 class Request(BaseModel):

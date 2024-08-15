@@ -39,7 +39,7 @@ class Requester(BaseModel):
 class Status(BaseModel):
     color: str
     name: str
-    id: str
+    id: int
 
 
 class ServiceCategory(BaseModel):
