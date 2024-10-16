@@ -1,3 +1,6 @@
+import logging
+
+
 from .user import UserWebInterface
 from .request_web_interface import RequestWebInterface
 from .task_web_interface import TaskWebInterface
@@ -7,6 +10,9 @@ from .request_model import ViewRequestResponse, Request
 from .request_list_model import RequestListResponse
 from .task_model import TaskListResponse, TaskGetResponse
 from .task_model_model import Model as TaskResponse
+
+
+logging.basicConfig(level=logging.INFO)
 
 
 class UserInterface:
@@ -27,11 +33,19 @@ class RequestInterface:
     @classmethod
     def get(cls, request_id):
         api_response = RequestWebInterface.view_requst(request_id)
-        view_requst_response = ViewRequestResponse(**api_response)
-        return view_requst_response.request
+        view_request_response = ViewRequestResponse(**api_response)
+        return view_request_response.request
 
     @classmethod
-    def list(cls, list_info=None):
+    def list(cls, page=None):
+        logging.info(f"Got page {page}.")
+        row_count = 9
+        list_info = {
+            "list_info": {
+                "row_count": row_count,
+                "start_index": 1 + page * row_count
+                }
+        }
         api_response = RequestWebInterface.view_all_requests(list_info)
         request_list_response = RequestListResponse(**api_response)
         return request_list_response.requests
