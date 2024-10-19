@@ -1,6 +1,5 @@
 import logging
 
-
 from .user import UserWebInterface
 from .request_web_interface import RequestWebInterface
 from .task_web_interface import TaskWebInterface
@@ -12,8 +11,7 @@ from .task_model import TaskListResponse, TaskGetResponse
 from .task_model_model import Model as TaskResponse
 
 
-logging.basicConfig(level=logging.INFO)
-
+logger = logging.getLogger(__name__)
 
 class UserInterface:
     @classmethod
@@ -37,15 +35,21 @@ class RequestInterface:
         return view_request_response.request
 
     @classmethod
-    def list(cls, page=None):
-        logging.info(f"Got page {page}.")
-        row_count = 9
+    def list(cls, page, technician_name=None):
+        logger.info(f"Got {page=} {technician_name=}")
+        row_count = 7
         list_info = {
-            "list_info": {
-                "row_count": row_count,
-                "start_index": 1 + page * row_count
-                }
+            "row_count": row_count,
+            "start_index": 1 + page * row_count,
         }
+        search_fields = {
+            "search_fields": {
+                "technician.name": technician_name
+            }
+        }
+        if technician_name is not None:
+            list_info.update(search_fields)
+        list_info = {"list_info": list_info}
         api_response = RequestWebInterface.view_all_requests(list_info)
         request_list_response = RequestListResponse(**api_response)
         return request_list_response.requests

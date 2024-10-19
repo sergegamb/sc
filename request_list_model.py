@@ -10,11 +10,6 @@ class ResponseStatu(BaseModel):
     status: str
 
 
-class SearchFields(BaseModel):
-    priority_name: str = Field(..., alias='priority.name')
-    subject: str
-
-
 class FilterBy(BaseModel):
     name: str
 
@@ -23,7 +18,7 @@ class ListInfo(BaseModel):
     has_more_rows: Optional[bool] = None
     start_index: Optional[int] = None
     sort_field: Optional[str] = None
-    search_fields: Optional[SearchFields] = None
+    search_fields: Optional[dict] = None
     total_count: Optional[int] = None
     filter_by: Optional[FilterBy] = None
     sort_order: Optional[str] = None
