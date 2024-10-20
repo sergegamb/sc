@@ -13,6 +13,17 @@ from .task_model_model import Model as TaskResponse
 
 logger = logging.getLogger(__name__)
 
+
+GROUPS = {
+    "Сергей Гамбарян": ["Входящие", "HELPDESK", "Хостинг", "Разработка"],
+    "Илья Маракушев": ["ManageEngine", "Входящие", "HELPDESK", "Хостинг", "Разработка"],
+    "Павел Тетерин": ["Входящие", "HELPDESK"],
+    "Василий Гусев": ["ManageEngine", "HELPDESK", "Хостинг, облачные решения", "Разработка", "AGNEKO SNMPc", "Входящие"],
+    "Вадим Гусев": ["ManageEngine", "Хостинг, облачные решения", "Разработка", "AGNEKO SNMPc", "Входящие"],
+    "Дмитрий Одинцов": ["HELPDESK", "Хостинг, облачные решения", "Разработка", "Входящие"],
+    "Александр Михайлов": ["ManageEngine", "Входящие", "HELPDESK"]
+}
+
 class UserInterface:
     @classmethod
     def get_by_email(cls, email: str):
@@ -24,6 +35,7 @@ class UserInterface:
 
 
 class RequestInterface:
+    row_count = 7
     @classmethod
     def add(cls, data: dict):
         return Request(**RequestWebInterface.create_new_request(data))
@@ -35,21 +47,47 @@ class RequestInterface:
         return view_request_response.request
 
     @classmethod
-    def list(cls, page, technician_name=None):
-        logger.info(f"Got {page=} {technician_name=}")
-        row_count = 7
+    def list_all(cls, page):
         list_info = {
-            "row_count": row_count,
-            "start_index": 1 + page * row_count,
+            "row_count": cls.row_count,
+            "start_index": 1 + page * cls.row_count,
+        }
+        list_info = {"list_info": list_info}
+        return cls.list(list_info)
+
+    @classmethod
+    def list_technician(cls, page, technician):
+        list_info = {
+            "row_count": cls.row_count,
+            "start_index": 1 + page * cls.row_count,
         }
         search_fields = {
             "search_fields": {
-                "technician.name": technician_name
+                "technician.name": technician
             }
         }
-        if technician_name is not None:
-            list_info.update(search_fields)
+        list_info.update(search_fields)
         list_info = {"list_info": list_info}
+        return cls.list(list_info)
+
+    @classmethod
+    def list_technician_group(cls, page, technician):
+        list_info = {
+            "row_count": cls.row_count,
+            "start_index": 1 + page * cls.row_count,
+        }
+        search_criteria = {
+            "field": "group.name",
+            "condition": "is",
+            "values": GROUPS[technician]
+        }
+        search_criteria = {"search_criteria": search_criteria}
+        list_info.update(search_criteria)
+        list_info = {"list_info": list_info}
+        return cls.list(list_info)
+
+    @classmethod
+    def list(cls, list_info):
         api_response = RequestWebInterface.view_all_requests(list_info)
         request_list_response = RequestListResponse(**api_response)
         return request_list_response.requests

@@ -30,14 +30,13 @@ class Requester(BaseModel):
     name: str
     mobile: Any
     profile_pic: ProfilePic
-    is_vipuser: bool
     org_user_status: str
     id: str
     account: Optional[Account] = None
 
 
 class Status(BaseModel):
-    color: str
+    color: str | None
     name: str
     id: int
 
