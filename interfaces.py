@@ -61,12 +61,33 @@ class RequestInterface:
             "row_count": cls.row_count,
             "start_index": 1 + page * cls.row_count,
         }
-        search_fields = {
-            "search_fields": {
-                "technician.name": technician
-            }
+        status_not_compleate = {
+            "field": "status.name",
+            "condition": "is not",
+            "value": "Выполнена",
+            "logical_operator": "AND"
         }
-        list_info.update(search_fields)
+        status_not_canceled = {
+            "field": "status.name",
+            "condition": "is not",
+            "value": "Отменена",
+            "logical_operator": "AND"
+        }
+        status_not_closed = {
+            "field": "status.name",
+            "condition": "is not",
+            "value": "Закрыта",
+            "logical_operator": "AND"
+        }
+        status_exclude = [status_not_closed, status_not_canceled, status_not_compleate]
+        search_criteria = {
+            "field": "technician.name",
+            "condition": "is",
+            "value": "Сергей Гамбарян",
+            "children": status_exclude
+        }
+        search_criteria = {"search_criteria": search_criteria}
+        list_info.update(search_criteria)
         list_info = {"list_info": list_info}
         return cls.list(list_info)
 
