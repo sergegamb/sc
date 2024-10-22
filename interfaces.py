@@ -42,9 +42,23 @@ class RequestInterface:
 
     @classmethod
     def get(cls, request_id):
-        api_response = RequestWebInterface.view_requst(request_id)
+        api_response = RequestWebInterface.view_request(request_id)
         view_request_response = ViewRequestResponse(**api_response)
         return view_request_response.request
+
+    @classmethod
+    def to_work(cls, request_id):
+        status_name = {"name": "В работе"}
+        status = {"status": status_name}
+        request = {"request": status}
+        RequestWebInterface.update_request(request_id, request)
+
+    @classmethod
+    def to_hold(cls, request_id):
+        status_name = {"name": "Приостановлена"}
+        status = {"status": status_name}
+        request = {"request": status}
+        RequestWebInterface.update_request(request_id, request)
 
     @classmethod
     def list_all(cls, page):

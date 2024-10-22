@@ -236,7 +236,7 @@ class Request(BaseModel):
     is_read: bool
     lifecycle: Lifecycle
     reason_for_cancel: Any
-    group: Group
+    group: Group | None
     email_to: List[str]
     created_time: CreatedTime
     approval_status: Any
