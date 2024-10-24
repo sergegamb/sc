@@ -164,7 +164,7 @@ class TaskInterface:
 
     @classmethod
     def delete(cls, task_id):
-        api_response = TaskWebInterface.delete(task_id)
+        TaskWebInterface.delete(task_id)
 
 
 class RequestTaskInterface:
@@ -215,3 +215,11 @@ class RequestTaskInterface:
             request_id,
             task_id
         )
+
+    @classmethod
+    def to_done(cls, request_id, task_id):
+        status_name = {"name": "Выполнена"}
+        status = {"status": status_name}
+        task = {"task": status}
+        api_response = RequestTaskWebInterface.update(request_id, task_id, task)
+        logger.info(api_response)

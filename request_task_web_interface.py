@@ -34,3 +34,10 @@ class RequestTaskWebInterface:
         url = cls.url + f"/{request_id}/tasks/{task_id}"
         response = requests.delete(url, headers=cls.headers, verify=False)
         return response.json()
+
+    @classmethod
+    def update(cls, request_id, task_id, task):
+        url = cls.url + f"/{request_id}/tasks/{task_id}"
+        params = {"input_data": json.dumps(task)}
+        response = requests.put(url, headers=cls.headers, params=params, verify=False)
+        return response.json()
