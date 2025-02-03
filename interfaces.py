@@ -98,7 +98,7 @@ class RequestInterface:
         search_criteria = {
             "field": "technician.name",
             "condition": "is",
-            "value": "Сергей Гамбарян",
+            "value": technician,
             "children": status_exclude
         }
         search_criteria = {"search_criteria": search_criteria}
