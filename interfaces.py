@@ -3,6 +3,7 @@ import logging
 from .billing_time_entry_web_interface import (
     BillingTimeEntryWebInterface,
     GeneralTaskTimeEntryWebInterface,
+    RequestTaskTimeEntryWebInterface
 )
 from .user import UserWebInterface
 from .request_web_interface import RequestWebInterface
@@ -269,4 +270,22 @@ class GeneralTaskTimeEntryInterface:
         worklog.update(description)
         worklog = {"worklog": worklog}
         api_response = GeneralTaskTimeEntryWebInterface.add_a_worklog(task_id, worklog)
+        return api_response.get("response_status")
+
+
+class RequestTaskTimeEntryInterface:
+    #TODO: DRY
+    @classmethod
+    def add(cls, request_id, task_id, owner, start_time, end_time, description):
+        owner = {"owner": {"name": owner}}
+        start_time = {"value": start_time}
+        end_time = {"value": end_time}
+        description = {"description": description}
+        worklog = {}
+        worklog.update(owner)
+        worklog["start_time"] = start_time
+        worklog["end_time"] = end_time
+        worklog.update(description)
+        worklog = {"worklog": worklog}
+        api_response = RequestTaskTimeEntryWebInterface.add_a_worklog(request_id, task_id, worklog)
         return api_response.get("response_status")
