@@ -1,6 +1,9 @@
 import logging
 
-from .billing_time_entry_web_interface import BillingTimeEntryWebInterface
+from .billing_time_entry_web_interface import (
+    BillingTimeEntryWebInterface,
+    GeneralTaskTimeEntryWebInterface,
+)
 from .user import UserWebInterface
 from .request_web_interface import RequestWebInterface
 from .task_web_interface import TaskWebInterface
@@ -167,6 +170,14 @@ class TaskInterface:
     def delete(cls, task_id):
         TaskWebInterface.delete(task_id)
 
+    @classmethod
+    def to_done(cls, task_id):
+        status_name = {"name": "Выполнена"}
+        status = {"status": status_name}
+        task = {"task": status}
+        api_response = TaskWebInterface.update(task_id, task)
+        logger.info(api_response)
+
 
 class RequestTaskInterface:
     list_info = {
@@ -240,4 +251,22 @@ class BillingTimeEntryInterface:
         worklog.update(description)
         worklog = {"worklog": worklog}
         api_response = BillingTimeEntryWebInterface.add_a_time_entry(request_id, worklog)
+        return api_response.get("response_status")
+
+
+class GeneralTaskTimeEntryInterface:
+    #TODO: DRY
+    @classmethod
+    def add(cls, task_id, owner, start_time, end_time, description):
+        owner = {"owner": {"name": owner}}
+        start_time = {"value": start_time}
+        end_time = {"value": end_time}
+        description = {"description": description}
+        worklog = {}
+        worklog.update(owner)
+        worklog["start_time"] = start_time
+        worklog["end_time"] = end_time
+        worklog.update(description)
+        worklog = {"worklog": worklog}
+        api_response = GeneralTaskTimeEntryWebInterface.add_a_worklog(task_id, worklog)
         return api_response.get("response_status")
