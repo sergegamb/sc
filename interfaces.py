@@ -134,12 +134,11 @@ class RequestInterface:
 
 
 class TaskInterface:
+    row_count = 10
     list_info = {
-        "list_info": {
-            "row_count": 10,
-            "sort_order": "desc",
-            "sort_field": "id",
-        }
+        "row_count": row_count,
+        "sort_order": "desc",
+        "sort_field": "id",
     }
 
     @classmethod
@@ -157,8 +156,11 @@ class TaskInterface:
         return task_add_response.task
 
     @classmethod
-    def list(cls):
-        api_response = TaskWebInterface.list(cls.list_info)
+    def list(cls, page):
+        list_info = cls.list_info
+        list_info["start_index"] = (page - 1) * cls.row_count + 1
+        list_info = {"list_info": list_info}
+        api_response = TaskWebInterface.list(list_info)
         task_list_response = TaskListResponse(**api_response)
         return task_list_response.tasks
 
